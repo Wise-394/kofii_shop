@@ -1,3 +1,8 @@
+import { Hero } from "../components/Home/Hero.jsx";
 export function Home() {
-  return <p>hi</p>;
+  return (
+    <>
+      <Hero />
+    </>
+  );
 }
