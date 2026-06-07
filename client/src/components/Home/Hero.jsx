@@ -5,18 +5,23 @@ export function Hero() {
         items-center bg-[url('/assets/heroBg.webp')] bg-fixed bg-center
         bg-no-repeat bg-cover text-white relative p-2 md:p-10"
     >
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/60" />
       <div
         className="text-center flex justify-center items-center flex-col order-2
-          md:order-1 z-10 gap-3 md:text-left md:items:start"
+          md:order-1 z-10 gap-3 md:text-left md:items-start lg:px-10"
       >
-        <h1 className="text-3xl font-bold md:text-4xl">
+        <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
           Slow down. Sip something warm.
         </h1>
-        <p className="text-md font-semibold md:text-xl">
+        <p className="text-md md:text-xl font-light">
           A cozy spot made for long conversations and quiet mornings alike.
         </p>
-        <button>Buy Now!</button>
+        <button
+          className="hover:cursor-pointer bg-brown-300 py-3 px-6 rounded-2xl
+            hover:brightness-115 mt-7"
+        >
+          Buy Now!
+        </button>
       </div>
       <div className="order:2 md:order-1 items-center justify-center flex z-10"></div>
     </section>
