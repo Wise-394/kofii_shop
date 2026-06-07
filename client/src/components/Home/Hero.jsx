@@ -34,7 +34,9 @@ export function Hero() {
           className="text-center flex justify-center items-center flex-col
             order-2 md:order-1 z-10 gap-3 md:text-left md:items-start lg:px-10"
         >
-          <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
+          <h1
+            className="text-3xl font-bold md:text-4xl lg:text-5xl font-playfair"
+          >
             Slow down. <br /> Sip something warm.
           </h1>
           <p className="text-md md:text-xl font-light">

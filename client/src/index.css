@@ -1,9 +1,16 @@
 @import "tailwindcss";
 
+body {
+  font-family: "Lato", sans-serif;
+}
+
 @theme {
   --color-brown-100: #e3dacb;
   --color-brown-200: #ae8768;
   --color-brown-300: #af8d72;
   --color-brown-400: #412d22;
   --color-brown-500: #422922;
+
+  --font-playfair: "Playfair Display", serif;
+  --font-lato: "Lato", sans-serif;
 }

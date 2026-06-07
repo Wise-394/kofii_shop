@@ -15,7 +15,7 @@ export function Header() {
       <Link
         to="/"
         className="flex items-center justify-center text-lg font-bold
-          text-brown-200"
+          text-brown-200 font-playfair"
       >
         <GiCoffeeCup className="" />
         Kofii Shop
