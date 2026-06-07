@@ -10,7 +10,7 @@ export function Header() {
   return (
     <header
       className="sticky top-0 flex w-screen justify-between px-4 py-5 sm:px-10
-        h-[8vh] bg-brown-100"
+        h-[8vh] bg-brown-100 z-50"
     >
       <Link
         to="/"
@@ -22,13 +22,25 @@ export function Header() {
       </Link>
 
       <nav className="hidden gap-15 sm:flex">
-        <Link to="/" className="hover:text-brown-500 font-medium">
+        <Link
+          to="/"
+          className="hover:text-brown-500 font-medium hover:scale-108
+            transition-transform"
+        >
           Home
         </Link>
-        <Link to="/cart" className="hover:text-brown-500 font-medium">
+        <Link
+          to="/cart"
+          className="hover:text-brown-500 font-medium hover:scale-108
+            transition-transform"
+        >
           Cart
         </Link>
-        <Link to="/shop" className="hover:text-brown-500 font-medium">
+        <Link
+          to="/shop"
+          className="hover:text-brown-500 font-medium hover:scale-108
+            transition-transform"
+        >
           Shop
         </Link>
       </nav>
