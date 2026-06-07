@@ -9,8 +9,8 @@ export function Header() {
   };
   return (
     <header
-      className="sticky top-0 flex w-screen justify-between px-4 py-5 sm:px-10
-        h-[8vh] bg-brown-100 z-50"
+      className="sticky top-0 flex w-full justify-between px-4 py-5 sm:px-10
+        items-center h-[8vh] bg-brown-100 z-50"
     >
       <Link
         to="/"
