@@ -1,7 +1,9 @@
 import express from "express";
 import { healthRouter } from "./routes/health.js";
+import { createTableIfNotExist } from "./model/ createTable.js";
 const app = express();
 
+createTableIfNotExist();
 app.use("/health", healthRouter);
 
 app
@@ -11,3 +13,7 @@ app
   .on("error", (err) => {
     console.error("Error running server:", err);
   });
+
+// routes
+// coffee
+// featured
