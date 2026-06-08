@@ -19,12 +19,6 @@ export function Featured() {
           to work. Every sip tells a story of early mornings, quiet moments, and
           the small rituals that make each day worth savoring.
         </p>
-        <button
-          className="hover:cursor-pointer bg-brown-500 text-white py-3 px-6
-            rounded-2xl hover:brightness-115 mt-2"
-        >
-          Buy Now!
-        </button>
         <Carousel />
       </div>
     </section>

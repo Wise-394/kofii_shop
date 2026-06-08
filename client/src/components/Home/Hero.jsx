@@ -47,11 +47,11 @@ export function Hero() {
         className="bg-brown-500 text-white h-12 flex justify-between
           items-center p-5 text-xs md:text-base sm:px-10 font-light"
       >
-        <p className="italic flex items-center gap-1">
+        <p className="flex items-center gap-1">
           <IoIosPin />
           42 CRT Avenue, Akiba Underground
         </p>
-        <div className="flex gap-2 sm:gap-5 hover:cursor-pointer">
+        <div className="flex gap-4 sm:gap-5 hover:cursor-pointer text-lg">
           <RiInstagramFill />
           <FaFacebook />
           <FaFacebookMessenger />
