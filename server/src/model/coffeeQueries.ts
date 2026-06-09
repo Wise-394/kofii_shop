@@ -3,7 +3,8 @@ import type { Coffee } from "../types/types.js";
 
 export const getAllCoffee = async () => {
   try {
-    await database.query(`SELECT * FROM coffee`);
+    const { rows } = await database.query(`SELECT * FROM coffee`);
+    return rows;
   } catch (err) {
     console.error("unable to get all coffee", err);
     throw err;

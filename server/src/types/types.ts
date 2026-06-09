@@ -3,7 +3,7 @@ export interface ApiMessage {
 }
 
 export interface Coffee {
-  iD: number;
+  iD: number | null;
   imagePath: string | null;
   name: string;
   description: string;
