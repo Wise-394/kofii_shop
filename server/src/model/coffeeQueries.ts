@@ -29,6 +29,23 @@ export const insertCoffee = async (coffee: Coffee) => {
   }
 };
 
-export const updateCoffee = () => {};
+export const updateCoffee = async (coffee: Coffee) => {
+  try {
+    await database.query(
+      `UPDATE SET coffee(name = $1, description = $2, price = $3) WHERE id = $4`,
+      [coffee.name, coffee.description, coffee.price],
+    );
+  } catch (err) {
+    console.error("unable to update coffee", err);
+    throw err;
+  }
+};
 
-export const deleteCOffee = () => {};
+export const deleteCOffee = async (id: number) => {
+  try {
+    await database.query("DELETE FROM coffee WHERE id = $1", [id]);
+  } catch (err) {
+    console.error("unable to delete coffee", err);
+    throw err;
+  }
+};
