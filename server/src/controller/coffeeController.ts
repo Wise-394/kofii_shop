@@ -1,5 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
-import { getAllCoffee, insertCoffee } from "../model/coffeeQueries.js";
+import {
+  getAllCoffee,
+  getCoffeeById,
+  insertCoffee,
+} from "../model/coffeeQueries.js";
 import type { Coffee, ApiMessage } from "../types/types.js";
 export const getAllCoffeeController = async (
   req: Request,
@@ -11,6 +15,24 @@ export const getAllCoffeeController = async (
     return res.json(coffees);
   } catch (err) {
     console.error("unable to get all coffee in controller", err);
+    next(err);
+  }
+};
+
+export const getCoffeeByIdController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const iD = parseInt(req.params.id as string);
+    if (isNaN(iD)) {
+      return res.status(400);
+    }
+    const coffee = await getCoffeeById(iD);
+    return res.json(coffee);
+  } catch (err) {
+    console.error("unable to get coffe by id in controller", err);
     next(err);
   }
 };

@@ -12,7 +12,11 @@ export const getAllCoffee = async () => {
 };
 export const getCoffeeById = async (id: number) => {
   try {
-    await database.query(`SELECT * FROM coffee WHERE id = $1`, [id]);
+    const { rows } = await database.query(
+      `SELECT * FROM coffee WHERE id = $1`,
+      [id],
+    );
+    return rows[0];
   } catch (err) {
     console.error("unable to get coffee by id", err);
     throw err;

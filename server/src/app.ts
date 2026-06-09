@@ -5,6 +5,8 @@ import { coffeeRouter } from "./routes/coffee.js";
 const app = express();
 
 createTableIfNotExist();
+app.use(express.urlencoded);
+app.use(express.json());
 app.use("/health", healthRouter);
 app.use("/coffee", coffeeRouter);
 app
