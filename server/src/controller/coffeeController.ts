@@ -37,7 +37,6 @@ export const getCoffeeByIdController = async (
   }
 };
 
-// TODO UPDATE TO FIX IMAGES
 export const insertCoffeeController = async (
   req: Request,
   res: Response,
@@ -49,7 +48,7 @@ export const insertCoffeeController = async (
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      imagePath: null,
+      imagePath: req.file?.path ?? null,
     };
     await insertCoffee(coffee);
     const response: ApiMessage = { message: "success" };
