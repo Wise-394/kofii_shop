@@ -11,6 +11,7 @@ export const getAllCoffeeController = async (
   next: NextFunction,
 ) => {
   try {
+    // TODO ADD FEATURED
     const coffees = await getAllCoffee();
     return res.json(coffees);
   } catch (err) {
@@ -25,11 +26,11 @@ export const getCoffeeByIdController = async (
   next: NextFunction,
 ) => {
   try {
-    const iD = parseInt(req.params.id as string);
-    if (isNaN(iD)) {
+    const id = parseInt(req.params.id as string);
+    if (isNaN(id)) {
       return res.status(400);
     }
-    const coffee = await getCoffeeById(iD);
+    const coffee = await getCoffeeById(id);
     return res.json(coffee);
   } catch (err) {
     console.error("unable to get coffe by id in controller", err);
@@ -44,7 +45,7 @@ export const insertCoffeeController = async (
 ) => {
   try {
     const coffee: Coffee = {
-      iD: null,
+      id: null,
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
