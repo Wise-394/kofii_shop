@@ -9,3 +9,9 @@ export interface Coffee {
   description: string;
   price: number;
 }
+
+export interface User {
+  id: number | null;
+  username: string;
+  password: string;
+}

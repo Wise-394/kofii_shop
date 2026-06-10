@@ -24,8 +24,14 @@
     "typescript-eslint": "^8.60.1"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "multer": "^2.1.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "pg": "^8.21.0"
   }
 }
