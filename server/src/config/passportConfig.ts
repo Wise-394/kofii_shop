@@ -15,13 +15,11 @@ export const passportSetup = () => {
   passport.use(
     new JwtStrategy(opts, async (payload, done) => {
       try {
-        const user = getUserById(payload.sub);
-        if (!user) {
-          return done(null, false);
-        }
+        const user = await getUserById(payload.sub);
+        if (!user) return done(null, false);
         return done(null, user);
       } catch (err) {
-        return done(err, false);
+        done(err, false);
       }
     }),
   );

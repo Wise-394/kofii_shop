@@ -12,6 +12,7 @@ export const getAllCoffeeController = async (
 ) => {
   try {
     // TODO ADD FEATURED
+    //TODO ADD LOGIN
     const coffees = await getAllCoffee();
     return res.json(coffees);
   } catch (err) {

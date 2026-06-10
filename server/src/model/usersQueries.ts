@@ -13,9 +13,12 @@ export const insertUser = async (user: User) => {
   }
 };
 
-export const getUserById = async (id: number) => {
+export const getUserById = async (id: number): Promise<User> => {
   try {
-    await database.query("SELECT * FROM users WHERE id = $1", [id]);
+    const { rows } = await database.query("SELECT * FROM users WHERE id = $1", [
+      id,
+    ]);
+    return rows[0];
   } catch (err) {
     console.error("unablet to get username by id", err);
     throw err;

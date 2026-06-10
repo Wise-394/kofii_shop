@@ -5,11 +5,17 @@ import {
   insertCoffeeController,
 } from "../controller/coffeeController.js";
 import { upload } from "../config/multer.js";
+import passport from "passport";
 
 export const coffeeRouter = Router();
 
 coffeeRouter.get("/", getAllCoffeeController);
-coffeeRouter.post("/", upload.single("image"), insertCoffeeController);
+coffeeRouter.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  insertCoffeeController,
+);
 
 coffeeRouter.get("/:id", getCoffeeByIdController);
 // coffeeRouter.put("/:id");
