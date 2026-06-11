@@ -25,6 +25,21 @@ export const getUserById = async (id: number): Promise<User> => {
   }
 };
 
+export const getUserByUsername = async (
+  username: string,
+): Promise<User | null> => {
+  try {
+    const { rows } = await database.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username],
+    );
+    return rows[0];
+  } catch (err) {
+    console.error("unablet to get username by id", err);
+    throw err;
+  }
+};
+
 export const updateUser = async (user: User) => {
   try {
     await database.query(

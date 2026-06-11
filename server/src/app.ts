@@ -1,8 +1,9 @@
 import express from "express";
-import { healthRouter } from "./routes/health.js";
+import { healthRouter } from "./routes/healthRouter.js";
 import { createTableIfNotExist } from "./model/ createTable.js";
-import { coffeeRouter } from "./routes/coffee.js";
+import { coffeeRouter } from "./routes/coffeeRouter.js";
 import { passportSetup } from "./config/passportConfig.js";
+import { loginRouter } from "./routes/loginRouter.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/health", healthRouter);
 app.use("/uploads", express.static("uploads"));
 app.use("/coffee", coffeeRouter);
+app.use("/login", loginRouter);
 app
   .listen(3000, () => {
     console.log("Server running on http://localhost:3000");
