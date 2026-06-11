@@ -8,7 +8,7 @@ const app = express();
 
 createTableIfNotExist();
 passportSetup();
-app.use(express.urlencoded);
+app.use(express.urlencoded());
 app.use(express.json());
 app.use("/health", healthRouter);
 app.use("/uploads", express.static("uploads"));

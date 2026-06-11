@@ -14,7 +14,7 @@ export const getAllCoffeeController = async (
   try {
     const isFeatured = req.query.isFeatured;
     let coffees: Coffee[];
-    if (isFeatured) {
+    if (isFeatured === "true") {
       coffees = await getAllFeaturedCoffee();
     } else {
       coffees = await getAllCoffee();

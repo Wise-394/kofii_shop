@@ -12,7 +12,7 @@ const createCoffeeTable = async () => {
         name TEXT NOT NULL,
         description TEXT NOT NULL,
         price INT NOT NULL,
-        imagePath TEXT NOT NULL
+        imagePath TEXT NOT NULL,
         isFeatured BOOLEAN NOT NULL)`);
   } catch (err) {
     console.error("Unable to create coffee table", err);
@@ -32,3 +32,5 @@ export const createUsersTable = async () => {
     throw err;
   }
 };
+
+//change int to numeric

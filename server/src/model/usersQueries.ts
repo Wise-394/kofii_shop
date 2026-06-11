@@ -1,6 +1,6 @@
 import type { User } from "../types/types.js";
 import { database } from "../config/databaseConfig.js";
-//create, read, update, delete
+
 export const insertUser = async (user: User) => {
   try {
     await database.query(
