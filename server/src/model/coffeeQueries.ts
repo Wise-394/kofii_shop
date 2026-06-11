@@ -1,7 +1,7 @@
 import { database } from "../config/databaseConfig.js";
 import type { Coffee } from "../types/types.js";
 
-export const getAllCoffee = async () => {
+export const getAllCoffee = async (): Promise<Coffee[]> => {
   try {
     const { rows } = await database.query(`SELECT * FROM coffee`);
     return rows;
@@ -11,7 +11,7 @@ export const getAllCoffee = async () => {
   }
 };
 
-export const getAllFeaturedCoffee = async () => {
+export const getAllFeaturedCoffee = async (): Promise<Coffee[]> => {
   try {
     const { rows } = await database.query(
       `SELECT * FROM coffee WHERE isFeatured = TRUE`,
@@ -36,13 +36,20 @@ export const toggleFeaturedCoffee = async (id: number) => {
   }
 };
 
-export const getCoffeeById = async (id: number) => {
+export const getCoffeeById = async (id: number): Promise<Coffee> => {
   try {
     const { rows } = await database.query(
       `SELECT * FROM coffee WHERE id = $1`,
       [id],
     );
-    return rows[0];
+    const coffee: Coffee = {
+      id: rows[0].id,
+      description: rows[0].description,
+      imagePath: rows[0].imagePath,
+      name: rows[0].name,
+      price: rows[0].price,
+    };
+    return coffee;
   } catch (err) {
     console.error("unable to get coffee by id", err);
     throw err;

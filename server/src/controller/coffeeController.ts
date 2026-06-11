@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import {
   getAllCoffee,
+  getAllFeaturedCoffee,
   getCoffeeById,
   insertCoffee,
 } from "../model/coffeeQueries.js";
@@ -11,9 +12,13 @@ export const getAllCoffeeController = async (
   next: NextFunction,
 ) => {
   try {
-    // TODO ADD FEATURED
-    //TODO ADD LOGIN
-    const coffees = await getAllCoffee();
+    const isFeatured = req.params.isFeatured;
+    let coffees: Coffee[];
+    if (isFeatured) {
+      coffees = await getAllFeaturedCoffee();
+    } else {
+      coffees = await getAllCoffee();
+    }
     return res.json(coffees);
   } catch (err) {
     console.error("unable to get all coffee in controller", err);
