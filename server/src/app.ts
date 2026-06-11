@@ -11,6 +11,7 @@ passportSetup();
 app.use(express.urlencoded);
 app.use(express.json());
 app.use("/health", healthRouter);
+app.use("/uploads", express.static("uploads"));
 app.use("/coffee", coffeeRouter);
 app
   .listen(3000, () => {
@@ -19,7 +20,3 @@ app
   .on("error", (err) => {
     console.error("Error running server:", err);
   });
-
-// routes
-// coffee
-// featured

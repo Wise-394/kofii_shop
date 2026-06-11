@@ -47,4 +47,3 @@ export const deleteUser = async (id: number) => {
 };
 
 //TODO ADD LOGIN
-//TODO SERVE IMAGE

@@ -12,7 +12,7 @@ export const getAllCoffeeController = async (
   next: NextFunction,
 ) => {
   try {
-    const isFeatured = req.params.isFeatured;
+    const isFeatured = req.query.isFeatured;
     let coffees: Coffee[];
     if (isFeatured) {
       coffees = await getAllFeaturedCoffee();
