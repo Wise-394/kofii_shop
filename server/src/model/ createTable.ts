@@ -1,8 +1,10 @@
 import { database } from "../config/databaseConfig.js";
+import bcrypt from "bcryptjs";
 
-export const createTableIfNotExist = () => {
-  createCoffeeTable();
-  createUsersTable();
+export const createTableIfNotExist = async () => {
+  await createCoffeeTable();
+  await createUsersTable();
+  await seedAdminUser();
 };
 
 const createCoffeeTable = async () => {
@@ -33,4 +35,22 @@ export const createUsersTable = async () => {
   }
 };
 
-//change int to numeric
+const seedAdminUser = async () => {
+  try {
+    const { rows } = await database.query(`SELECT id FROM users LIMIT 1`);
+
+    if (rows.length === 0) {
+      const hashedPassword = await bcrypt.hash("admin", 10);
+      await database.query(
+        `INSERT INTO users (username, password) VALUES ($1, $2)`,
+        ["admin", hashedPassword],
+      );
+      console.log("Admin user seeded.");
+    }
+  } catch (err) {
+    console.error("Unable to seed admin user", err);
+    throw err;
+  }
+};
+
+//TODO change int to numeric

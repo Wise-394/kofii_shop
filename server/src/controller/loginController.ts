@@ -1,25 +1,31 @@
 import type { Request, Response, NextFunction } from "express";
 import { getUserByUsername } from "../model/usersQueries.js";
 import type { ApiMessage } from "../types/types.js";
-export const loginController = (
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+export const loginController = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const password = req.body.password;
-    const username = getUserByUsername(req.body.username);
-    let response: ApiMessage;
-    if (!username) {
-      response = { message: "invalid username or password" };
-      return res.status(401).json(response);
-    }
-    //TODO check password
-    //TODO BCRYPTJS
-    //if not return 401
-    //if correct sign jwt
+    const user = await getUserByUsername(req.body.username);
+    const response: ApiMessage = { message: "invalid username or password" };
+
+    if (!user) return res.status(401).json(response);
+    const isCorrect = await bcrypt.compare(password, user.password);
+    if (!isCorrect) return res.status(401).json(response);
+
+    //give jwt
+    const token = jwt.sign(
+      { sub: user.id, username: user.username },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1d" },
+    );
+    return res.json({ token });
   } catch (err) {
     console.error("unable to login user", err);
-    throw err;
+    next(err);
   }
 };

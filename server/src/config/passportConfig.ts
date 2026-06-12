@@ -9,7 +9,7 @@ import passport from "passport";
 export const passportSetup = () => {
   const opts: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET || "",
+    secretOrKey: process.env.JWT_SECRET!,
   };
 
   passport.use(
