@@ -4,11 +4,12 @@ import { createTableIfNotExist } from "./model/ createTable.js";
 import { coffeeRouter } from "./routes/coffeeRouter.js";
 import { passportSetup } from "./config/passportConfig.js";
 import { loginRouter } from "./routes/loginRouter.js";
-
+import cors from "cors";
 const app = express();
 
 createTableIfNotExist();
 passportSetup();
+app.use(cors());
 app.use(express.urlencoded());
 app.use(express.json());
 app.use("/health", healthRouter);

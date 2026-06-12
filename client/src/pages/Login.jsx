@@ -4,13 +4,25 @@ import { TbLockPassword } from "react-icons/tb";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { useLoginHook } from "../hooks/useLoginHook.jsx";
 export function Login() {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    isLoading,
+    error,
+    login,
+    isSuccess,
+  } = useLoginHook();
   const toggleIsPasswordOpen = () => {
     setIsPasswordOpen((prev) => !prev);
   };
   const handleLogin = (e) => {
     e.preventDefault();
+    login();
   };
   return (
     <main className="h-screen flex flex-col items-center justify-center p-5">
@@ -49,11 +61,13 @@ export function Login() {
                 placeholder="Enter Username"
                 className="rounded-md p-1 pl-7 bg-gray-200 w-full"
                 autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
           </div>
           <div className="flex flex-col w-full">
-            <label htmlFor="username" className="font-semibold">
+            <label htmlFor="password" className="font-semibold">
               Password:
             </label>
             <div className="w-full relative">
@@ -76,6 +90,8 @@ export function Login() {
                 placeholder="Enter Password"
                 className="rounded-md p-1 bg-gray-200 pl-7 w-full pr-7"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
@@ -83,8 +99,10 @@ export function Login() {
             className="bg-brown-500 text-white w-full rounded-md p-2 mt-7
               cursor-pointer"
           >
-            Login
+            {isLoading ? "logging in..." : "login"}
           </button>
+          {isSuccess && <p>SUCCESS</p>}
+          {error && <p>{error}</p>}
         </div>
       </form>
     </main>
