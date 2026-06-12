@@ -3,10 +3,19 @@ import { IoMdPerson } from "react-icons/io";
 import { TbLockPassword } from "react-icons/tb";
 import { FaRegEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
 export function Login() {
+  const [isPasswordOpen, setIsPasswordOpen] = useState(false);
+  const toggleIsPasswordOpen = () => {
+    setIsPasswordOpen((prev) => !prev);
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+  };
   return (
     <main className="h-screen flex flex-col items-center justify-center p-5">
       <form
+        onSubmit={(e) => handleLogin(e)}
         className="p-7 rounded-2xl w-full shadow-lg border-2 border-brown-200
           max-w-90 flex flex-col items-center gap-3"
       >
@@ -54,11 +63,14 @@ export function Login() {
               >
                 <TbLockPassword />
               </span>
-              <span className="absolute right-2 top-1/2 -translate-y-1/2">
-                <FaRegEye />
+              <span
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+                onClick={toggleIsPasswordOpen}
+              >
+                {isPasswordOpen ? <FaRegEye /> : <FaEyeSlash />}
               </span>
               <input
-                type="password"
+                type={isPasswordOpen ? "text" : "password"}
                 name="password"
                 id="password"
                 placeholder="Enter Password"
