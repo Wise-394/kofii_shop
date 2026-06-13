@@ -1,3 +1,5 @@
+import { DashBoard } from "../../components/CMS/Dashboard.jsx";
+
 export function HomeCMS() {
   return (
     <main className="p-5">
@@ -5,6 +7,7 @@ export function HomeCMS() {
       <h2 className="text-md font-playfair">
         View Your Koffii Shop Analytics Here
       </h2>
+      <DashBoard />
     </main>
   );
 }
