@@ -6,8 +6,11 @@ import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useLoginHook } from "../hooks/useLoginHook.jsx";
 import { HeaderCMS } from "../components/CMS/HeaderCMS.jsx";
+import { useAuthenticationStore } from "../store/useAuthenticationStore.jsx";
+import { Navigate } from "react-router";
 export function Login() {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
+  const isLoggedIn = useAuthenticationStore((state) => state.isLoggedIn);
   const {
     username,
     setUsername,
@@ -25,6 +28,9 @@ export function Login() {
     e.preventDefault();
     login();
   };
+
+  if (isLoggedIn) return <Navigate to="/admin" />;
+
   return (
     <main className="h-screen flex flex-col">
       <HeaderCMS />
