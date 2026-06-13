@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useAuthenticationStore } from "../store/useAuthenticationStore.jsx";
+
 const api = import.meta.env.VITE_BACKEND_API;
 export const useLoginHook = () => {
   const [username, setUsername] = useState("");
@@ -6,6 +8,7 @@ export const useLoginHook = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const loginStore = useAuthenticationStore((state) => state.login);
 
   const login = async () => {
     try {
@@ -23,7 +26,7 @@ export const useLoginHook = () => {
         throw new Error(data.message ?? data.errors[0]?.msg ?? "Login failed");
       }
 
-      //TODO save jwt
+      loginStore(data.token);
       setIsSuccess(true);
     } catch (err) {
       setError(err.message);
