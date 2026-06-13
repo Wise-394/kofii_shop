@@ -14,12 +14,6 @@ export function HomeCMS() {
           </h1>
           <h2 className="text-md">Manage Koffii Shop Here</h2>
         </div>
-        <button
-          className="py-3 px-3 bg-brown-300 rounded-lg text-white
-            hover:brightness-110 cursor-pointer"
-        >
-          Add New Coffee
-        </button>
       </div>
 
       <DashBoard />
