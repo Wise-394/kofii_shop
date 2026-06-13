@@ -22,9 +22,8 @@ export const useLoginHook = () => {
       if (!res.ok) {
         throw new Error(data.message ?? data.errors[0]?.msg ?? "Login failed");
       }
-      //save jwt
-      //TODO later
-      //TODO CORS
+
+      //TODO save jwt
       setIsSuccess(true);
     } catch (err) {
       setError(err.message);
