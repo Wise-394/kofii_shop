@@ -1,6 +1,12 @@
 import { IoMdSearch } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import { useEffect } from "react";
+import { useCoffeeHook } from "../../hooks/useCoffeeHook.jsx";
 export function CoffeeList() {
+  const { posts, isLoading, error, fetchCoffee } = useCoffeeHook();
+  useEffect(() => {
+    fetchCoffee();
+  }, [fetchCoffee]);
   return (
     <section className="mt-5 flex flex-col gap-5 items-start">
       <p className="text-2xl font-bold text-brown-200">Coffees</p>
@@ -46,126 +52,31 @@ export function CoffeeList() {
         className="flex flex-col gap-2 sm:grid-cols-2 sm:grid md:grid-cols-4
           2xl:grid-cols-6 sm:gap-5"
       >
-        <div className="bg-gray-200 rounded-lg">
-          <img
-            src="https://placehold.co/600x400"
-            alt="coffee"
-            className="rounded-t-lg"
-          />
-          <div className="p-3 flex flex-col">
-            <p className="text-2xl font-playfair font-bold">Coffee Name</p>
-            <p>description, This is a very large description</p>
-            <p className="font-semibold">100$</p>
-            <div className="flex items-center ml-auto gap-5">
-              <button
-                className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
-                  text-white"
-              >
-                Edit
-              </button>
+        {isLoading && <p>loading coffees</p>}
+        {error && <p>{error}</p>}
+        {posts.length <= 0 && !isLoading && !error && <p>Empty</p>}
+        {posts.map((post) => (
+          <div className="bg-gray-200 rounded-lg" key={post.id}>
+            <img
+              src="https://placehold.co/600x400"
+              alt="coffee"
+              className="rounded-t-lg"
+            />
+            <div className="p-3 flex flex-col">
+              <p className="text-2xl font-playfair font-bold">{post.name}</p>
+              <p>{post.description}</p>
+              <p className="font-semibold">{post.price}</p>
+              <div className="flex items-center ml-auto gap-5">
+                <button
+                  className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
+                    text-white"
+                >
+                  Edit
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="bg-gray-200 rounded-lg">
-          <img
-            src="https://placehold.co/600x400"
-            alt="coffee"
-            className="rounded-t-lg"
-          />
-          <div className="p-3 flex flex-col">
-            <p className="text-2xl font-playfair font-bold">Coffee Name</p>
-            <p>description, This is a very large description</p>
-            <p className="font-semibold">100$</p>
-            <div className="flex items-center ml-auto gap-5">
-              <button
-                className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
-                  text-white"
-              >
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="bg-gray-200 rounded-lg">
-          <img
-            src="https://placehold.co/600x400"
-            alt="coffee"
-            className="rounded-t-lg"
-          />
-          <div className="p-3 flex flex-col">
-            <p className="text-2xl font-playfair font-bold">Coffee Name</p>
-            <p>description, This is a very large description</p>
-            <p className="font-semibold">100$</p>
-            <div className="flex items-center ml-auto gap-5">
-              <button
-                className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
-                  text-white"
-              >
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="bg-gray-200 rounded-lg">
-          <img
-            src="https://placehold.co/600x400"
-            alt="coffee"
-            className="rounded-t-lg"
-          />
-          <div className="p-3 flex flex-col">
-            <p className="text-2xl font-playfair font-bold">Coffee Name</p>
-            <p>description, This is a very large description</p>
-            <p className="font-semibold">100$</p>
-            <div className="flex items-center ml-auto gap-5">
-              <button
-                className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
-                  text-white"
-              >
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="bg-gray-200 rounded-lg">
-          <img
-            src="https://placehold.co/600x400"
-            alt="coffee"
-            className="rounded-t-lg"
-          />
-          <div className="p-3 flex flex-col">
-            <p className="text-2xl font-playfair font-bold">Coffee Name</p>
-            <p>description, This is a very large description</p>
-            <p className="font-semibold">100$</p>
-            <div className="flex items-center ml-auto gap-5">
-              <button
-                className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
-                  text-white"
-              >
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="bg-gray-200 rounded-lg">
-          <img
-            src="https://placehold.co/600x400"
-            alt="coffee"
-            className="rounded-t-lg"
-          />
-          <div className="p-3 flex flex-col">
-            <p className="text-2xl font-playfair font-bold">Coffee Name</p>
-            <p>description, This is a very large description</p>
-            <p className="font-semibold">100$</p>
-            <div className="flex items-center ml-auto gap-5">
-              <button
-                className="px-8 py-2 bg-brown-200 rounded-lg cursor-pointer
-                  text-white"
-              >
-                Edit
-              </button>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );

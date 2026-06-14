@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 export const useCoffeeHook = () => {
   const api = import.meta.env.VITE_BACKEND_API;
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchCoffee = async () => {
+  const fetchCoffee = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -20,7 +20,7 @@ export const useCoffeeHook = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [api]);
 
   return { posts, setPosts, isLoading, error, fetchCoffee };
 };
