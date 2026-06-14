@@ -1,9 +1,11 @@
 import { CoffeeList } from "../../components/CMS/CoffeeList.jsx";
 import { DashBoard } from "../../components/CMS/Dashboard.jsx";
+import { CoffeeModal } from "../../components/CMS/CoffeeModal.jsx";
 
 export function HomeCMS() {
   return (
     <main className="p-5">
+      <CoffeeModal />
       <div
         className="w-full flex flex-col sm:flex-row sm:justify-between
           items-start gap-3 sm:items-center"

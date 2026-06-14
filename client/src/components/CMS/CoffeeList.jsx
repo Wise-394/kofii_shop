@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { useCoffeeHook } from "../../hooks/useCoffeeHook.jsx";
 import { MdOutlineCoffeeMaker } from "react-icons/md";
 import { MdError } from "react-icons/md";
+import { useCoffeeModalStore } from "../../store/useCoffeeModalStore.jsx";
 export function CoffeeList() {
   const { posts, isLoading, error, fetchCoffee } = useCoffeeHook();
+  const openModal = useCoffeeModalStore((state) => state.openModal);
   useEffect(() => {
     fetchCoffee();
   }, [fetchCoffee]);
@@ -47,6 +49,7 @@ export function CoffeeList() {
         <button
           className="py-2 px-3 bg-brown-300 rounded-lg text-white
             hover:brightness-110 cursor-pointer flex items-center gap-2"
+          onClick={openModal}
         >
           <FaPlus /> Add New Coffee
         </button>
