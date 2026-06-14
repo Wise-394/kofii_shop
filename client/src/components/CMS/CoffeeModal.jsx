@@ -13,14 +13,72 @@ export function CoffeeModal() {
       dialogRef.current?.close();
     }
   }, [isCoffeeModalOpen]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    // TODO submit data
+    closeModal();
+  };
+
   return (
     <dialog
       ref={dialogRef}
       onClose={closeModal}
-      className="m-auto p-5 rounded-lg"
+      className={`${isCoffeeModalOpen ? "flex" : "hidden"} m-auto p-5 rounded-lg
+        relative flex-col w-full items-center sm:w-120`}
     >
-      <p>test</p>
-      <button onClick={closeModal}>close</button>
+      <button onClick={closeModal} className="absolute top-2 right-2">
+        close
+      </button>
+      <h1>Coffee</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-2">
+        <div className="flex flex-col w-full">
+          <label htmlFor="name">Coffee Name</label>
+          <input
+            placeholder="enter coffee name"
+            type="text"
+            name="name"
+            id="name"
+            className="bg-gray-200 p-2"
+          />
+        </div>
+        <div className="flex flex-col w-full">
+          <label htmlFor="description">Coffee Description</label>
+          <input
+            placeholder="this coffee is good"
+            type="text"
+            name="description"
+            id="description"
+            className="bg-gray-200 p-2"
+          />
+        </div>
+        <div className="flex flex-col w-full items-start">
+          <label htmlFor="price">Price</label>
+          <input
+            type="number"
+            name="price"
+            id="price"
+            className="bg-gray-200 p-2"
+          />
+        </div>
+        <div className="flex flex-col w-full items-start">
+          <label htmlFor="imageUpload">Select an image:</label>
+          <input
+            type="file"
+            id="imageUpload"
+            name="imageFile"
+            accept="image/*"
+            className="bg-gray-200 p-2"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded mt-2"
+        >
+          Submit
+        </button>
+      </form>
     </dialog>
   );
 }
