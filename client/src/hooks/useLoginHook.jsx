@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useAuthenticationStore } from "../store/useAuthenticationStore.jsx";
 
-const api = import.meta.env.VITE_BACKEND_API;
 export const useLoginHook = () => {
+  const api = import.meta.env.VITE_BACKEND_API;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
