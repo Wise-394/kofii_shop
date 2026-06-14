@@ -13,7 +13,7 @@ coffeeRouter.get("/", getAllCoffeeController);
 coffeeRouter.post(
   "/",
   passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
+  upload.single("imageFile"),
   insertCoffeeController,
 );
 

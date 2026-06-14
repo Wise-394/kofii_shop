@@ -1,16 +1,19 @@
 import { IoMdSearch } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import { useEffect } from "react";
-import { useCoffeeHook } from "../../hooks/useCoffeeHook.jsx";
+import { useCoffeeStore } from "../../store/useCoffeesStore.jsx";
 import { MdOutlineCoffeeMaker } from "react-icons/md";
 import { MdError } from "react-icons/md";
 import { useCoffeeModalStore } from "../../store/useCoffeeModalStore.jsx";
+
 export function CoffeeList() {
-  const { posts, isLoading, error, fetchCoffee } = useCoffeeHook();
+  const { coffees, isLoading, error, getCoffee } = useCoffeeStore();
   const openModal = useCoffeeModalStore((state) => state.openModal);
+
   useEffect(() => {
-    fetchCoffee();
-  }, [fetchCoffee]);
+    getCoffee();
+  }, [getCoffee]);
+
   return (
     <section className="mt-5 flex flex-col gap-5 items-start">
       <p className="text-2xl font-bold text-brown-200">Coffees</p>
@@ -80,7 +83,7 @@ export function CoffeeList() {
             <p>{error}</p>
           </div>
         )}
-        {posts.length <= 0 && !isLoading && !error && (
+        {coffees.length <= 0 && !isLoading && !error && (
           <div
             className="bg-gray-200 rounded-lg w-full flex flex-col p-5
               items-center text-center"
@@ -90,7 +93,7 @@ export function CoffeeList() {
             <p>There are currently no coffee in the database</p>
           </div>
         )}
-        {posts.map((post) => (
+        {coffees.map((post) => (
           <div className="bg-gray-200 rounded-lg" key={post.id}>
             <img
               src="https://placehold.co/600x400"

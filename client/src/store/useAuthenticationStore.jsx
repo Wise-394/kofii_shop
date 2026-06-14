@@ -7,7 +7,7 @@ export const useAuthenticationStore = create((set) => ({
 
   loginUser: (token) => {
     setJWT(token);
-    set(() => ({ isLoggedIn: true }));
+    set(() => ({ isLoggedIn: true, token }));
   },
   logoutUser: () => {
     removeJWT();

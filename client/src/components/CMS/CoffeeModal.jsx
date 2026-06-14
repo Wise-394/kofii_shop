@@ -1,11 +1,18 @@
 import { useEffect, useRef } from "react";
 import { useCoffeeModalStore } from "../../store/useCoffeeModalStore.jsx";
+import { useAuthenticationStore } from "../../store/useAuthenticationStore.jsx";
+
 export function CoffeeModal() {
   const dialogRef = useRef(null);
   const isCoffeeModalOpen = useCoffeeModalStore(
     (state) => state.isCoffeeModalOpen,
   );
   const closeModal = useCoffeeModalStore((state) => state.closeModal);
+  const postCoffee = useCoffeeModalStore((state) => state.postCoffee);
+  const isPosting = useCoffeeModalStore((state) => state.isPosting);
+  const postError = useCoffeeModalStore((state) => state.postError);
+  const token = useAuthenticationStore((state) => state.token);
+
   useEffect(() => {
     if (isCoffeeModalOpen) {
       dialogRef.current?.showModal();
@@ -14,11 +21,15 @@ export function CoffeeModal() {
     }
   }, [isCoffeeModalOpen]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    // TODO submit data
-    closeModal();
+
+    const success = await postCoffee(formData, token);
+    if (success) {
+      e.target.reset();
+      closeModal();
+    }
   };
 
   return (
@@ -72,11 +83,14 @@ export function CoffeeModal() {
             className="bg-gray-200 p-2"
           />
         </div>
+        {postError && <p className="text-red-500 text-sm">{postError}</p>}
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded mt-2"
+          disabled={isPosting}
+          className="bg-blue-500 text-white p-2 rounded mt-2
+            disabled:opacity-50"
         >
-          Submit
+          {isPosting ? "Submitting..." : "Submit"}
         </button>
       </form>
     </dialog>
