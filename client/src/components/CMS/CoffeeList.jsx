@@ -2,6 +2,8 @@ import { IoMdSearch } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import { useEffect } from "react";
 import { useCoffeeHook } from "../../hooks/useCoffeeHook.jsx";
+import { MdOutlineCoffeeMaker } from "react-icons/md";
+import { MdError } from "react-icons/md";
 export function CoffeeList() {
   const { posts, isLoading, error, fetchCoffee } = useCoffeeHook();
   useEffect(() => {
@@ -15,8 +17,10 @@ export function CoffeeList() {
         className="flex w-full justify-between flex-col md:flex-row gap-2
           items-start"
       >
-        <div className="flex gap-2">
-          <div className="relative inline-flex items-center justify-center">
+        <div className="flex gap-2 w-full md:w-auto">
+          <div
+            className="relative inline-flex items-center justify-center flex-1"
+          >
             <span
               className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500
                 pointer-events-none"
@@ -28,7 +32,7 @@ export function CoffeeList() {
               name="coffeeFilter"
               id="coffeeFilter"
               placeholder="Search Coffees..."
-              className="py-2 pl-8 pr-4 rounded-md bg-gray-200"
+              className="py-2 pl-8 rounded-md bg-gray-200 w-full"
             />
           </div>
           <button
@@ -50,11 +54,39 @@ export function CoffeeList() {
 
       <div
         className="flex flex-col gap-2 sm:grid-cols-2 sm:grid md:grid-cols-4
-          2xl:grid-cols-6 sm:gap-5"
+          2xl:grid-cols-6 sm:gap-5 w-full"
       >
-        {isLoading && <p>loading coffees</p>}
-        {error && <p>{error}</p>}
-        {posts.length <= 0 && !isLoading && !error && <p>Empty</p>}
+        {isLoading && (
+          <div className="bg-gray-200 rounded-lg">
+            <div className="rounded-t-lg bg-gray-300 h-45" />
+            <div className="p-3 flex flex-col">
+              <p>loading...</p>
+              <div className="flex items-center ml-auto gap-5">
+                <div className="bg-gray-300 h-7 w-20 rounded-lg text-white"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        {error && (
+          <div
+            className="bg-gray-200 rounded-lg w-full flex flex-col p-5
+              items-center text-center"
+          >
+            <MdError className="text-5xl" />
+            <p className="text-brown-200 font-bold text-lg">ERROR</p>
+            <p>{error}</p>
+          </div>
+        )}
+        {posts.length <= 0 && !isLoading && !error && (
+          <div
+            className="bg-gray-200 rounded-lg w-full flex flex-col p-5
+              items-center text-center"
+          >
+            <MdOutlineCoffeeMaker className="text-5xl" />
+            <p className="text-brown-200 font-bold text-lg">EMPTY</p>
+            <p>There are currently no coffee in the database</p>
+          </div>
+        )}
         {posts.map((post) => (
           <div className="bg-gray-200 rounded-lg" key={post.id}>
             <img

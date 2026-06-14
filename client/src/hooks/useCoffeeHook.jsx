@@ -12,11 +12,12 @@ export const useCoffeeHook = () => {
       const res = await fetch(`${api}/coffee`);
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.message ?? "error fetching coffees");
+        throw new Error(data.message);
       }
       setPosts(data);
     } catch (err) {
-      setError(err.message);
+      console.error(err);
+      setError("Error fetching coffees");
     } finally {
       setIsLoading(false);
     }
