@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  deleteCoffeeController,
   getAllCoffeeController,
   getCoffeeByIdController,
   insertCoffeeController,
@@ -19,4 +20,8 @@ coffeeRouter.post(
 
 coffeeRouter.get("/:id", getCoffeeByIdController);
 // coffeeRouter.put("/:id");
-// coffeeRouter.delete("/:id",);
+coffeeRouter.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deleteCoffeeController,
+);

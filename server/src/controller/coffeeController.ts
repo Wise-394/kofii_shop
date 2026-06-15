@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import {
+  deleteCoffee,
   getAllCoffee,
   getAllFeaturedCoffee,
   getCoffeeById,
@@ -64,6 +65,26 @@ export const insertCoffeeController = async (
     res.json(response);
   } catch (err) {
     console.error("unable to insert coffee in controller", err);
+    next(err);
+  }
+};
+
+export const deleteCoffeeController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = parseInt(req.params.id as string);
+    let response: ApiMessage;
+    if (!id || isNaN(id)) {
+      response = { message: "invalid id to delete" };
+      return res.status(400).json(response);
+    }
+    await deleteCoffee(id);
+    return res.status(200);
+  } catch (err) {
+    console.error("unable to delete coffee in controller", err);
     next(err);
   }
 };
