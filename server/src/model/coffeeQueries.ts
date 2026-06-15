@@ -60,8 +60,8 @@ export const getCoffeeById = async (id: number): Promise<Coffee> => {
 
 export const insertCoffee = async (coffee: Coffee) => {
   try {
-    await database.query(
-      `INSERT INTO coffee(name, description, price, "imagePath", "isFeatured", "isActive") VALUES($1,$2,$3, $4, $5, $6)`,
+    const { rows } = await database.query(
+      `INSERT INTO coffee(name, description, price, "imagePath", "isFeatured", "isActive") VALUES($1,$2,$3, $4, $5, $6) RETURNING *`,
       [
         coffee.name,
         coffee.description,
@@ -71,6 +71,7 @@ export const insertCoffee = async (coffee: Coffee) => {
         coffee.isActive,
       ],
     );
+    return rows[0];
   } catch (err) {
     console.error("unable to insert coffee", err);
     throw err;

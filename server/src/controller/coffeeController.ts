@@ -60,9 +60,8 @@ export const insertCoffeeController = async (
       isFeatured: req.body.isFeatured === "on",
       isActive: req.body.isActive === "on",
     };
-    await insertCoffee(coffee);
-    const response: ApiMessage = { message: "success" };
-    res.json(response);
+    const newCoffee = await insertCoffee(coffee);
+    res.json({ coffee: newCoffee });
   } catch (err) {
     console.error("unable to insert coffee in controller", err);
     next(err);
@@ -82,7 +81,7 @@ export const deleteCoffeeController = async (
       return res.status(400).json(response);
     }
     await deleteCoffee(id);
-    return res.status(200);
+    return res.status(200).json({ message: "Coffee deleted successfully" });
   } catch (err) {
     console.error("unable to delete coffee in controller", err);
     next(err);

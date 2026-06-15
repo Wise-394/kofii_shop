@@ -24,10 +24,14 @@ export const useCoffeeModalStore = create((set) => ({
         body: formData,
       });
       const data = await res.json();
+
       if (!res.ok)
         throw new Error(data.errors?.[0] || "Error submitting coffee");
 
-      await useCoffeeStore.getState().getCoffee();
+      useCoffeeStore.setState((state) => ({
+        coffees: [...state.coffees, data.coffee],
+      }));
+
       return true;
     } catch (err) {
       console.error(err);
