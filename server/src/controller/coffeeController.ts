@@ -56,6 +56,8 @@ export const insertCoffeeController = async (
       description: req.body.description,
       price: req.body.price,
       imagePath: req.file?.path ?? null,
+      isFeatured: req.body.isFeatured === "on",
+      isActive: req.body.isActive === "on",
     };
     await insertCoffee(coffee);
     const response: ApiMessage = { message: "success" };

@@ -15,6 +15,7 @@ const createCoffeeTable = async () => {
         description TEXT NOT NULL,
         price NUMERIC(10,2) NOT NULL,
         imagePath TEXT NOT NULL,
+        isActive BOOLEAN NOT NULL,
         isFeatured BOOLEAN NOT NULL)`);
   } catch (err) {
     console.error("Unable to create coffee table", err);

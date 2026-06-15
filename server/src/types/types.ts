@@ -8,6 +8,8 @@ export interface Coffee {
   name: string;
   description: string;
   price: number;
+  isActive: boolean;
+  isFeatured: boolean;
 }
 
 export interface User {

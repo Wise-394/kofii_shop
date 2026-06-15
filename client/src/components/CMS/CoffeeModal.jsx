@@ -36,59 +36,152 @@ export function CoffeeModal() {
     <dialog
       ref={dialogRef}
       onClose={closeModal}
-      className={`${isCoffeeModalOpen ? "flex" : "hidden"} m-auto p-5 rounded-lg
-        relative flex-col w-full items-center sm:w-120`}
+      className={`${isCoffeeModalOpen ? "flex" : "hidden"} m-auto p-6 rounded-xl
+        shadow-xl relative flex-col w-full max-w-md items-stretch
+        backdrop:bg-black/50`}
     >
-      <button onClick={closeModal} className="absolute top-2 right-2">
-        close
+      <button
+        onClick={closeModal}
+        aria-label="Close"
+        className="absolute top-3 right-3 text-gray-400 hover:text-gray-700
+          hover:cursor-pointer transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
       </button>
-      <h1>Coffee</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-2">
-        <div className="flex flex-col w-full">
-          <label htmlFor="name">Coffee Name</label>
+
+      <h1 className="text-xl font-semibold mb-4">Add Coffee</h1>
+
+      <form onSubmit={handleSubmit} className="flex flex-col w-full gap-4">
+        <div className="flex flex-col w-full gap-1">
+          <label htmlFor="name" className="text-sm font-medium text-gray-700">
+            Coffee Name
+          </label>
           <input
-            placeholder="enter coffee name"
+            placeholder="e.g. Caramel Latte"
             type="text"
             name="name"
             id="name"
-            className="bg-gray-200 p-2"
+            className="bg-gray-100 border border-transparent rounded-md p-2
+              focus:outline-none focus:ring-2 focus:ring-brown-300
+              focus:bg-white transition-colors"
           />
         </div>
-        <div className="flex flex-col w-full">
-          <label htmlFor="description">Coffee Description</label>
+
+        <div className="flex flex-col w-full gap-1">
+          <label
+            htmlFor="description"
+            className="text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
           <input
             placeholder="this coffee is good"
             type="text"
             name="description"
             id="description"
-            className="bg-gray-200 p-2"
+            className="bg-gray-100 border border-transparent rounded-md p-2
+              focus:outline-none focus:ring-2 focus:ring-brown-300
+              focus:bg-white transition-colors"
           />
         </div>
-        <div className="flex flex-col w-full items-start">
-          <label htmlFor="price">Price</label>
-          <input
-            type="number"
-            name="price"
-            id="price"
-            className="bg-gray-200 p-2"
-          />
+
+        <div className="flex flex-col w-full gap-1">
+          <label htmlFor="price" className="text-sm font-medium text-gray-700">
+            Price
+          </label>
+          <div className="relative">
+            <span
+              className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400"
+            >
+              PHP
+            </span>
+            <input
+              type="number"
+              name="price"
+              id="price"
+              step="0.01"
+              placeholder="0.00"
+              className="bg-gray-100 border border-transparent rounded-md p-2
+                pl-12 w-full focus:outline-none focus:ring-2
+                focus:ring-brown-300 focus:bg-white transition-colors"
+            />
+          </div>
         </div>
-        <div className="flex flex-col w-full items-start">
-          <label htmlFor="imageUpload">Select an image:</label>
+
+        <div className="flex gap-6">
+          <label
+            htmlFor="isFeatured"
+            className="flex items-center gap-2 text-sm font-medium text-gray-700
+              cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              name="isFeatured"
+              id="isFeatured"
+              className="h-4 w-4 rounded accent-brown-400"
+            />
+            Featured
+          </label>
+          <label
+            htmlFor="isActive"
+            className="flex items-center gap-2 text-sm font-medium text-gray-700
+              cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              name="isActive"
+              id="isActive"
+              className="h-4 w-4 rounded accent-brown-400"
+            />
+            Active
+          </label>
+        </div>
+
+        <div className="flex flex-col w-full gap-1">
+          <label
+            htmlFor="imageUpload"
+            className="text-sm font-medium text-gray-700"
+          >
+            Image
+          </label>
           <input
             type="file"
             id="imageUpload"
             name="imageFile"
             accept="image/*"
-            className="bg-gray-200 p-2"
+            className="bg-gray-100 rounded-md p-2 text-sm file:mr-3 file:py-1
+              file:px-3 file:rounded-md file:border-0 file:bg-brown-100
+              file:text-brown-700 file:text-sm file:font-medium
+              hover:file:bg-brown-200 file:cursor-pointer cursor-pointer"
           />
         </div>
-        {postError && <p className="text-red-500 text-sm">{postError}</p>}
+
+        {postError && (
+          <p
+            className="text-red-500 text-sm bg-red-50 border border-red-200
+              rounded-md p-2"
+          >
+            {postError}
+          </p>
+        )}
+
         <button
           type="submit"
           disabled={isPosting}
-          className="bg-blue-500 text-white p-2 rounded mt-2
-            disabled:opacity-50"
+          className="bg-brown-400 hover:bg-brown-500 text-white p-2.5 rounded-md
+            mt-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed
+            hover:cursor-pointer transition-colors"
         >
           {isPosting ? "Submitting..." : "Submit"}
         </button>

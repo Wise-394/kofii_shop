@@ -45,9 +45,11 @@ export const getCoffeeById = async (id: number): Promise<Coffee> => {
     const coffee: Coffee = {
       id: rows[0].id,
       description: rows[0].description,
-      imagePath: rows[0].imagePath,
+      imagePath: rows[0].imagepath,
       name: rows[0].name,
       price: rows[0].price,
+      isActive: rows[0].isactive,
+      isFeatured: rows[0].isfeatured,
     };
     return coffee;
   } catch (err) {
@@ -58,10 +60,16 @@ export const getCoffeeById = async (id: number): Promise<Coffee> => {
 export const insertCoffee = async (coffee: Coffee) => {
   try {
     await database.query(
-      `INSERT INTO coffee(name, description, price, imagePath, isFeatured) VALUES($1,$2,$3, $4, $5)`,
-      [coffee.name, coffee.description, coffee.price, coffee.imagePath, false],
+      `INSERT INTO coffee(name, description, price, imagePath, isFeatured, isActive) VALUES($1,$2,$3, $4, $5, $6)`,
+      [
+        coffee.name,
+        coffee.description,
+        coffee.price,
+        coffee.imagePath,
+        coffee.isFeatured,
+        coffee.isActive,
+      ],
     );
-    //TODO FIX ISFEATURED
   } catch (err) {
     console.error("unable to insert coffee", err);
     throw err;
@@ -71,8 +79,15 @@ export const insertCoffee = async (coffee: Coffee) => {
 export const updateCoffee = async (coffee: Coffee) => {
   try {
     await database.query(
-      `UPDATE coffee SET name = $1, description = $2, price = $3 WHERE id = $4`,
-      [coffee.name, coffee.description, coffee.price, coffee.id],
+      `UPDATE coffee SET name = $1, description = $2, price = $3, isActive = $4, isFeatured = $5 WHERE id = $6`,
+      [
+        coffee.name,
+        coffee.description,
+        coffee.price,
+        coffee.isActive,
+        coffee.isFeatured,
+        coffee.id,
+      ],
     );
   } catch (err) {
     console.error("unable to update coffee", err);
@@ -80,7 +95,7 @@ export const updateCoffee = async (coffee: Coffee) => {
   }
 };
 
-export const deleteCOffee = async (id: number) => {
+export const deleteCoffee = async (id: number) => {
   try {
     await database.query("DELETE FROM coffee WHERE id = $1", [id]);
   } catch (err) {
@@ -88,3 +103,5 @@ export const deleteCOffee = async (id: number) => {
     throw err;
   }
 };
+
+//TODO ADD QUOTE TO DB
