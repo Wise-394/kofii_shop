@@ -7,6 +7,7 @@ import {
   getAllFeaturedCoffee,
   getCoffeeById,
   insertCoffee,
+  updateCoffee,
 } from "../model/coffeeQueries.js";
 import type { Coffee, ApiMessage } from "../types/types.js";
 export const getAllCoffeeController = async (
@@ -86,9 +87,41 @@ export const deleteCoffeeController = async (
     if (result.imagePath) {
       await fs.unlink(path.resolve(result.imagePath));
     }
-    return res.status(200).json({ message: "Coffee deleted successfully" });
+    return res.json({ message: "Coffee deleted successfully" });
   } catch (err) {
     console.error("unable to delete coffee in controller", err);
     next(err);
   }
 };
+
+export const updateCoffeeController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = parseInt(req.params.id as string);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "invalid id to delete" });
+    }
+    const existingCoffee = await getCoffeeById(id);
+    if (req.file && existingCoffee.imagePath) {
+      await fs.unlink(path.resolve(existingCoffee.imagePath));
+    }
+    const coffee: Coffee = {
+      id,
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      imagePath: req.file?.path ?? existingCoffee.imagePath,
+      isActive: req.body.isActive,
+      isFeatured: req.body.isFeatured,
+    };
+    const newCoffee = await updateCoffee(coffee);
+    return res.json(newCoffee);
+  } catch (err) {
+    console.error("unable to update coffee in controller", err);
+    next(err);
+  }
+};
+//TODO THROW ERROR WHEN FILE PATH IMAGE IS NULL
