@@ -58,7 +58,7 @@ export const getCoffeeById = async (id: number): Promise<Coffee> => {
   }
 };
 
-export const insertCoffee = async (coffee: Coffee) => {
+export const insertCoffee = async (coffee: Coffee): Promise<Coffee> => {
   try {
     const { rows } = await database.query(
       `INSERT INTO coffee(name, description, price, "imagePath", "isFeatured", "isActive") VALUES($1,$2,$3, $4, $5, $6) RETURNING *`,
@@ -78,10 +78,10 @@ export const insertCoffee = async (coffee: Coffee) => {
   }
 };
 
-export const updateCoffee = async (coffee: Coffee) => {
+export const updateCoffee = async (coffee: Coffee): Promise<Coffee> => {
   try {
-    await database.query(
-      `UPDATE coffee SET name = $1, description = $2, price = $3, "isActive" = $4, "isFeatured" = $5 WHERE id = $6`,
+    const { rows } = await database.query(
+      `UPDATE coffee SET name = $1, description = $2, price = $3, "isActive" = $4, "isFeatured" = $5 WHERE id = $6 RETURNING *`,
       [
         coffee.name,
         coffee.description,
@@ -91,15 +91,20 @@ export const updateCoffee = async (coffee: Coffee) => {
         coffee.id,
       ],
     );
+    return rows[0];
   } catch (err) {
     console.error("unable to update coffee", err);
     throw err;
   }
 };
 
-export const deleteCoffee = async (id: number) => {
+export const deleteCoffee = async (id: number): Promise<Coffee> => {
   try {
-    await database.query("DELETE FROM coffee WHERE id = $1", [id]);
+    const { rows } = await database.query(
+      "DELETE FROM coffee WHERE id = $1 RETURNING *",
+      [id],
+    );
+    return rows[0];
   } catch (err) {
     console.error("unable to delete coffee", err);
     throw err;

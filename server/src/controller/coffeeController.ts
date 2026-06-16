@@ -1,4 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
+import fs from "fs/promises";
+import path from "path";
 import {
   deleteCoffee,
   getAllCoffee,
@@ -80,7 +82,10 @@ export const deleteCoffeeController = async (
       response = { message: "invalid id to delete" };
       return res.status(400).json(response);
     }
-    await deleteCoffee(id);
+    const result = await deleteCoffee(id);
+    if (result.imagePath) {
+      await fs.unlink(path.resolve(result.imagePath));
+    }
     return res.status(200).json({ message: "Coffee deleted successfully" });
   } catch (err) {
     console.error("unable to delete coffee in controller", err);
