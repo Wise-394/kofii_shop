@@ -32,10 +32,15 @@ export function CoffeeModal() {
     }
   };
 
+  const handleClose = () => {
+    closeModal();
+    dialogRef.current?.querySelector("form")?.reset();
+  };
+
   return (
     <dialog
       ref={dialogRef}
-      onClose={closeModal}
+      onClose={handleClose}
       className={`${isCoffeeModalOpen ? "flex" : "hidden"} m-auto p-6 rounded-xl
         shadow-xl relative flex-col w-full max-w-md items-stretch
         backdrop:bg-black/50`}
@@ -189,3 +194,5 @@ export function CoffeeModal() {
     </dialog>
   );
 }
+
+//TODO CLEAR MODAL WHEN EXITING
