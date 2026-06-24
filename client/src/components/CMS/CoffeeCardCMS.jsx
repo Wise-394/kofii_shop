@@ -1,7 +1,14 @@
 import { useCoffeeStore } from "../../store/useCoffeesStore.jsx";
+import { useCoffeeModalStore } from "../../store/useCoffeeModalStore.jsx";
+
 export function CoffeeCardCMS({ coffee }) {
-  const deleteCoffee = useCoffeeStore((state) => state.deleteCoffee);
   const api = import.meta.env.VITE_BACKEND_API;
+  const deleteCoffee = useCoffeeStore((state) => state.deleteCoffee);
+  const openModal = useCoffeeModalStore((state) => state.openModal);
+
+  const handleEdit = () => {
+    openModal(coffee);
+  };
 
   return (
     <div
@@ -32,6 +39,7 @@ export function CoffeeCardCMS({ coffee }) {
           <button
             className="px-8 py-2 bg-brown-500 rounded-lg cursor-pointer
               text-white hover:bg-brown-300 transition-colors"
+            onClick={handleEdit}
           >
             Edit
           </button>

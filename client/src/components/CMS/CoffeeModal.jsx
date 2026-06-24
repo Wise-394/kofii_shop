@@ -4,6 +4,7 @@ import { useAuthenticationStore } from "../../store/useAuthenticationStore.jsx";
 
 export function CoffeeModal() {
   const dialogRef = useRef(null);
+
   const isCoffeeModalOpen = useCoffeeModalStore(
     (state) => state.isCoffeeModalOpen,
   );
@@ -11,6 +12,9 @@ export function CoffeeModal() {
   const postCoffee = useCoffeeModalStore((state) => state.postCoffee);
   const isPosting = useCoffeeModalStore((state) => state.isPosting);
   const postError = useCoffeeModalStore((state) => state.postError);
+  const form = useCoffeeModalStore((state) => state.form);
+  const setField = useCoffeeModalStore((state) => state.setField);
+
   const token = useAuthenticationStore((state) => state.token);
 
   useEffect(() => {
@@ -23,24 +27,14 @@ export function CoffeeModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-
-    const success = await postCoffee(formData, token);
-    if (success) {
-      e.target.reset();
-      closeModal();
-    }
-  };
-
-  const handleClose = () => {
-    closeModal();
-    dialogRef.current?.querySelector("form")?.reset();
+    const success = await postCoffee(token);
+    if (success) closeModal();
   };
 
   return (
     <dialog
       ref={dialogRef}
-      onClose={handleClose}
+      onClose={closeModal}
       className={`${isCoffeeModalOpen ? "flex" : "hidden"} m-auto p-6 rounded-xl
         shadow-xl relative flex-col w-full max-w-md items-stretch
         backdrop:bg-black/50`}
@@ -77,6 +71,8 @@ export function CoffeeModal() {
             type="text"
             name="name"
             id="name"
+            value={form.name}
+            onChange={(e) => setField("name", e.target.value)}
             className="bg-gray-100 border border-transparent rounded-md p-2
               focus:outline-none focus:ring-2 focus:ring-brown-300
               focus:bg-white transition-colors"
@@ -95,6 +91,8 @@ export function CoffeeModal() {
             type="text"
             name="description"
             id="description"
+            value={form.description}
+            onChange={(e) => setField("description", e.target.value)}
             className="bg-gray-100 border border-transparent rounded-md p-2
               focus:outline-none focus:ring-2 focus:ring-brown-300
               focus:bg-white transition-colors"
@@ -117,6 +115,8 @@ export function CoffeeModal() {
               id="price"
               step="0.01"
               placeholder="0.00"
+              value={form.price}
+              onChange={(e) => setField("price", e.target.value)}
               className="bg-gray-100 border border-transparent rounded-md p-2
                 pl-12 w-full focus:outline-none focus:ring-2
                 focus:ring-brown-300 focus:bg-white transition-colors"
@@ -134,6 +134,8 @@ export function CoffeeModal() {
               type="checkbox"
               name="isFeatured"
               id="isFeatured"
+              checked={form.isFeatured}
+              onChange={(e) => setField("isFeatured", e.target.checked)}
               className="h-4 w-4 rounded accent-brown-400"
             />
             Featured
@@ -147,6 +149,8 @@ export function CoffeeModal() {
               type="checkbox"
               name="isActive"
               id="isActive"
+              checked={form.isActive}
+              onChange={(e) => setField("isActive", e.target.checked)}
               className="h-4 w-4 rounded accent-brown-400"
             />
             Active
@@ -165,6 +169,7 @@ export function CoffeeModal() {
             id="imageUpload"
             name="imageFile"
             accept="image/*"
+            onChange={(e) => setField("imageFile", e.target.files?.[0] ?? null)}
             className="bg-gray-100 rounded-md p-2 text-sm file:mr-3 file:py-1
               file:px-3 file:rounded-md file:border-0 file:bg-brown-100
               file:text-brown-700 file:text-sm file:font-medium
@@ -194,5 +199,3 @@ export function CoffeeModal() {
     </dialog>
   );
 }
-
-//TODO CLEAR MODAL WHEN EXITING

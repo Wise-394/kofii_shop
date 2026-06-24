@@ -104,6 +104,9 @@ export const updateCoffeeController = async (
     if (isNaN(id)) {
       return res.status(400).json({ message: "invalid id to delete" });
     }
+    if (!req.file) {
+      return res.status(4001).json({ message: "image is empty" });
+    }
     const existingCoffee = await getCoffeeById(id);
     if (req.file && existingCoffee.imagePath) {
       await fs.unlink(path.resolve(existingCoffee.imagePath));
@@ -124,4 +127,3 @@ export const updateCoffeeController = async (
     next(err);
   }
 };
-//TODO THROW ERROR WHEN FILE PATH IMAGE IS NULL

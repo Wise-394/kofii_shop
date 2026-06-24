@@ -1,29 +1,73 @@
 import { create } from "zustand";
 import { useCoffeeStore } from "./useCoffeesStore.jsx";
-export const useCoffeeModalStore = create((set) => ({
+
+const defaultForm = {
+  name: "",
+  description: "",
+  price: "",
+  isFeatured: false,
+  isActive: false,
+  imageFile: null,
+};
+
+export const useCoffeeModalStore = create((set, get) => ({
   isCoffeeModalOpen: false,
   isPosting: false,
   postError: null,
   selectedCoffee: null,
+  form: { ...defaultForm },
+
+  setField: (field, value) =>
+    set((state) => ({ form: { ...state.form, [field]: value } })),
+
+  resetForm: () => set({ form: { ...defaultForm } }),
 
   openModal: (coffee = null) =>
-    set({ isCoffeeModalOpen: true, selectedCoffee: coffee }),
-  closeModal: () => set({ isCoffeeModalOpen: false, selectedCoffee: null }),
+    set({
+      isCoffeeModalOpen: true,
+      selectedCoffee: coffee,
+      postError: null,
+      form: coffee
+        ? {
+            name: coffee.name ?? "",
+            description: coffee.description ?? "",
+            price: coffee.price ?? "",
+            isFeatured: coffee.isFeatured ?? false,
+            isActive: coffee.isActive ?? false,
+            imageFile: null,
+          }
+        : { ...defaultForm },
+    }),
 
-  postCoffee: async (formData, token) => {
+  closeModal: () =>
+    set({
+      isCoffeeModalOpen: false,
+      selectedCoffee: null,
+      form: { ...defaultForm },
+    }),
+
+  _buildFormData: () => {
+    const { form } = get();
+    const fd = new FormData();
+    fd.append("name", form.name);
+    fd.append("description", form.description);
+    fd.append("price", form.price);
+    fd.append("isFeatured", form.isFeatured);
+    fd.append("isActive", form.isActive);
+    if (form.imageFile) fd.append("imageFile", form.imageFile);
+    return fd;
+  },
+
+  postCoffee: async (token) => {
     const api = import.meta.env.VITE_BACKEND_API;
     set({ isPosting: true, postError: null });
     try {
-      if (!token) {
-        throw new Error("Error submitting coffee: unauthorized");
-      }
+      if (!token) throw new Error("Error submitting coffee: unauthorized");
 
       const res = await fetch(`${api}/coffee`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
+        headers: { Authorization: `Bearer ${token}` },
+        body: get()._buildFormData(),
       });
       const data = await res.json();
 
@@ -44,26 +88,23 @@ export const useCoffeeModalStore = create((set) => ({
     }
   },
 
-  updateCoffee: async (formData, coffeeId, token) => {
+  updateCoffee: async (coffeeId, token) => {
     const api = import.meta.env.VITE_BACKEND_API;
     set({ isPosting: true, postError: null });
     try {
-      if (!token) {
-        throw new Error("Error updating coffee: unauthorized");
-      }
+      if (!token) throw new Error("Error updating coffee: unauthorized");
 
       const res = await fetch(`${api}/coffee/${coffeeId}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
-        body: formData,
+        body: get()._buildFormData(),
       });
       const data = await res.json();
 
-      if (!res.ok) {
+      if (!res.ok)
         throw new Error(
           data.errors?.[0] || data.message || "Error updating coffee",
         );
-      }
 
       useCoffeeStore.setState((state) => ({
         coffees: state.coffees.map((coffee) =>
@@ -80,4 +121,3 @@ export const useCoffeeModalStore = create((set) => ({
     }
   },
 }));
-//TODO BACKEND UPDATING
