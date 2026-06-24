@@ -81,13 +81,14 @@ export const insertCoffee = async (coffee: Coffee): Promise<Coffee> => {
 export const updateCoffee = async (coffee: Coffee): Promise<Coffee> => {
   try {
     const { rows } = await database.query(
-      `UPDATE coffee SET name = $1, description = $2, price = $3, "isActive" = $4, "isFeatured" = $5 WHERE id = $6 RETURNING *`,
+      `UPDATE coffee SET name = $1, description = $2, price = $3, "isActive" = $4, "isFeatured" = $5, "imagePath" = $6 WHERE id = $7 RETURNING *`,
       [
         coffee.name,
         coffee.description,
         coffee.price,
         coffee.isActive,
         coffee.isFeatured,
+        coffee.imagePath,
         coffee.id,
       ],
     );

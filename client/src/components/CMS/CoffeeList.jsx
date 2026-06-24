@@ -52,7 +52,7 @@ export function CoffeeList() {
         <button
           className="py-2 px-3 bg-brown-300 rounded-lg text-white
             hover:brightness-110 cursor-pointer flex items-center gap-2"
-          onClick={openModal}
+          onClick={() => openModal()}
         >
           <FaPlus /> Add New Coffee
         </button>
