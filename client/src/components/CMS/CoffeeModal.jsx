@@ -10,11 +10,12 @@ export function CoffeeModal() {
   );
   const closeModal = useCoffeeModalStore((state) => state.closeModal);
   const postCoffee = useCoffeeModalStore((state) => state.postCoffee);
+  const updateCoffee = useCoffeeModalStore((state) => state.updateCoffee);
   const isPosting = useCoffeeModalStore((state) => state.isPosting);
   const postError = useCoffeeModalStore((state) => state.postError);
   const form = useCoffeeModalStore((state) => state.form);
   const setField = useCoffeeModalStore((state) => state.setField);
-
+  const selectedCoffee = useCoffeeModalStore((state) => state.selectedCoffee);
   const token = useAuthenticationStore((state) => state.token);
 
   useEffect(() => {
@@ -27,8 +28,13 @@ export function CoffeeModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await postCoffee(token);
-    if (success) closeModal();
+    if (!selectedCoffee) {
+      const success = await postCoffee(token);
+      if (success) closeModal();
+    } else {
+      const success = await updateCoffee(token);
+      if (success) closeModal();
+    }
   };
 
   return (
@@ -175,6 +181,11 @@ export function CoffeeModal() {
               file:text-brown-700 file:text-sm file:font-medium
               hover:file:bg-brown-200 file:cursor-pointer cursor-pointer"
           />
+          {selectedCoffee && (
+            <i className="text-center text-gray-500 text-sm">
+              only add image if u want to change old image
+            </i>
+          )}
         </div>
 
         {postError && (

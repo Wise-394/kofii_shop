@@ -54,6 +54,9 @@ export const insertCoffeeController = async (
   next: NextFunction,
 ) => {
   try {
+    if (!req.file) {
+      return res.status(401).json({ message: "image is empty" });
+    }
     const coffee: Coffee = {
       id: null,
       name: req.body.name,
@@ -104,9 +107,7 @@ export const updateCoffeeController = async (
     if (isNaN(id)) {
       return res.status(400).json({ message: "invalid id to delete" });
     }
-    if (!req.file) {
-      return res.status(4001).json({ message: "image is empty" });
-    }
+
     const existingCoffee = await getCoffeeById(id);
     if (req.file && existingCoffee.imagePath) {
       await fs.unlink(path.resolve(existingCoffee.imagePath));
@@ -117,11 +118,11 @@ export const updateCoffeeController = async (
       description: req.body.description,
       price: req.body.price,
       imagePath: req.file?.path ?? existingCoffee.imagePath,
-      isActive: req.body.isActive,
-      isFeatured: req.body.isFeatured,
+      isActive: req.body.isActive === "true",
+      isFeatured: req.body.isFeatured === "true",
     };
     const newCoffee = await updateCoffee(coffee);
-    return res.json(newCoffee);
+    return res.json({ coffee: newCoffee });
   } catch (err) {
     console.error("unable to update coffee in controller", err);
     next(err);

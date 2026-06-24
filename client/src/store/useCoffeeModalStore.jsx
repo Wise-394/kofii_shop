@@ -88,13 +88,14 @@ export const useCoffeeModalStore = create((set, get) => ({
     }
   },
 
-  updateCoffee: async (coffeeId, token) => {
+  updateCoffee: async (token) => {
     const api = import.meta.env.VITE_BACKEND_API;
+    const { selectedCoffee } = get();
     set({ isPosting: true, postError: null });
     try {
       if (!token) throw new Error("Error updating coffee: unauthorized");
 
-      const res = await fetch(`${api}/coffee/${coffeeId}`, {
+      const res = await fetch(`${api}/coffee/${selectedCoffee.id}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: get()._buildFormData(),
@@ -108,7 +109,7 @@ export const useCoffeeModalStore = create((set, get) => ({
 
       useCoffeeStore.setState((state) => ({
         coffees: state.coffees.map((coffee) =>
-          coffee.id === coffeeId ? data.coffee : coffee,
+          coffee.id === selectedCoffee.id ? data.coffee : coffee,
         ),
       }));
       return true;
