@@ -2,6 +2,8 @@ import { GiCoffeeCup } from "react-icons/gi";
 import { Link } from "react-router";
 import { CiMenuBurger } from "react-icons/ci";
 import { useState } from "react";
+import { IoMdHome } from "react-icons/io";
+import { FaCoffee } from "react-icons/fa";
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMobileMenu = () => {
@@ -25,23 +27,18 @@ export function Header() {
         <Link
           to="/"
           className="hover:text-brown-500 font-medium hover:scale-108
-            transition-transform"
+            transition-transform flex items-center gap-1"
         >
+          <IoMdHome />
           Home
         </Link>
         <Link
           to="/menu"
           className="hover:text-brown-500 font-medium hover:scale-108
-            transition-transform"
+            transition-transform flex items-center gap-1"
         >
+          <FaCoffee />
           Menu
-        </Link>
-        <Link
-          to="/cart"
-          className="hover:text-brown-500 font-medium hover:scale-108
-            transition-transform"
-        >
-          Cart
         </Link>
       </nav>
       <button className="block sm:hidden" onClick={toggleMobileMenu}>
@@ -60,11 +57,8 @@ export function Header() {
         <Link to="/" className="hover:text-brown-200">
           Home
         </Link>
-        <Link to="/cart" className="hover:text-brown-200">
-          Cart
-        </Link>
-        <Link to="/shop" className="hover:text-brown-200">
-          Shop
+        <Link to="/menu" className="hover:text-brown-200">
+          Menu
         </Link>
       </nav>
     </header>

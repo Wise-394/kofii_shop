@@ -57,14 +57,15 @@ export const insertCoffeeController = async (
     if (!req.file) {
       return res.status(401).json({ message: "image is empty" });
     }
+    console.log(req.body.isActive);
     const coffee: Coffee = {
       id: null,
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
       imagePath: req.file?.path ?? null,
-      isFeatured: req.body.isFeatured === "on",
-      isActive: req.body.isActive === "on",
+      isFeatured: req.body.isFeatured === "true",
+      isActive: req.body.isActive === "true",
     };
     const newCoffee = await insertCoffee(coffee);
     res.json({ coffee: newCoffee });
@@ -112,6 +113,7 @@ export const updateCoffeeController = async (
     if (req.file && existingCoffee.imagePath) {
       await fs.unlink(path.resolve(existingCoffee.imagePath));
     }
+    console.log(req.body.isActive);
     const coffee: Coffee = {
       id,
       name: req.body.name,

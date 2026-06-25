@@ -92,6 +92,7 @@ export function CoffeeList() {
           .filter((coffee) =>
             coffee.name.toLowerCase().includes(search.toLowerCase()),
           )
+          .sort((a, b) => b.isFeatured - a.isFeatured)
           .map((coffee) => (
             <CoffeeCardCMS coffee={coffee} key={coffee.id} />
           ))}
