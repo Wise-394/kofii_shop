@@ -4,6 +4,7 @@ import { ErrorElement } from "../pages/ErrorElement.jsx";
 import { Login } from "../pages/Login.jsx";
 import { LayoutCMS } from "../pages/CMS/LayoutCMS.jsx";
 import { HomeCMS } from "../pages/CMS/HomeCMS.jsx";
+import { Menu } from "../pages/Menu.jsx";
 
 export const appRoutes = [
   {
@@ -14,6 +15,10 @@ export const appRoutes = [
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/menu",
+        element: <Menu />,
       },
     ],
   },

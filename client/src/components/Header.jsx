@@ -30,18 +30,18 @@ export function Header() {
           Home
         </Link>
         <Link
+          to="/menu"
+          className="hover:text-brown-500 font-medium hover:scale-108
+            transition-transform"
+        >
+          Menu
+        </Link>
+        <Link
           to="/cart"
           className="hover:text-brown-500 font-medium hover:scale-108
             transition-transform"
         >
           Cart
-        </Link>
-        <Link
-          to="/shop"
-          className="hover:text-brown-500 font-medium hover:scale-108
-            transition-transform"
-        >
-          Shop
         </Link>
       </nav>
       <button className="block sm:hidden" onClick={toggleMobileMenu}>
