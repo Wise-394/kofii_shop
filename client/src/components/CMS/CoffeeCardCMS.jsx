@@ -11,19 +11,29 @@ export function CoffeeCardCMS({ coffee }) {
   };
   return (
     <div className="bg-gray-200 rounded-lg overflow-hidden shadow-md relative">
-      {coffee.isFeatured && (
+      {!coffee.isActive ? (
         <div
-          className="absolute top-2 right-2 bg-orange-300 py-1 px-2 rounded-2xl
-            shadow-lg text-sm"
+          className="absolute top-2 right-2 bg-red-500 py-1 px-2 rounded-2xl
+            shadow-lg text-sm text-white z-10"
         >
-          <p>Featured</p>
+          <p>Inactive</p>
         </div>
+      ) : (
+        coffee.isFeatured && (
+          <div
+            className="absolute top-2 right-2 bg-orange-300 py-1 px-2
+              rounded-2xl shadow-lg text-sm z-10"
+          >
+            <p>Featured</p>
+          </div>
+        )
       )}
       <div className="w-full aspect-square overflow-hidden">
         <img
           src={`${api}/${coffee.imagePath}`}
           alt={coffee.name}
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover
+            ${!coffee.isActive ? "grayscale" : ""}`}
         />
       </div>
       <div className="p-3 flex flex-col">
