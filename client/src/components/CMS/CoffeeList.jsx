@@ -100,5 +100,3 @@ export function CoffeeList() {
     </section>
   );
 }
-
-//TODO EDIT CARD

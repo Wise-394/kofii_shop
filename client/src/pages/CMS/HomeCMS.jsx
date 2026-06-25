@@ -4,7 +4,7 @@ import { CoffeeModal } from "../../components/CMS/CoffeeModal.jsx";
 
 export function HomeCMS() {
   return (
-    <main className="p-5">
+    <main className="p-5 flex-1 bg-brown-50 px-20">
       <CoffeeModal />
       <div
         className="w-full flex flex-col sm:flex-row sm:justify-between
@@ -12,9 +12,8 @@ export function HomeCMS() {
       >
         <div>
           <h1 className="text-2xl font-playfair font-bold text-brown-200">
-            Content Management System
+            Kofii Dashboard
           </h1>
-          <h2 className="text-md">Manage Koffii Shop Here</h2>
         </div>
       </div>
 
