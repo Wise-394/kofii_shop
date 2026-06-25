@@ -9,7 +9,6 @@ export function CoffeeCardCMS({ coffee }) {
   const handleEdit = () => {
     openModal(coffee);
   };
-  // console.log(coffee.isFeatured);
   return (
     <div className="bg-gray-200 rounded-lg overflow-hidden shadow-md relative">
       {coffee.isFeatured && (
@@ -29,7 +28,7 @@ export function CoffeeCardCMS({ coffee }) {
       </div>
       <div className="p-3 flex flex-col">
         <p className="text-2xl font-playfair font-bold">{coffee.name}</p>
-        <p className="text-sm text-gray-600 line-clamp-2">
+        <p className="text-sm text-gray-600 line-clamp-4">
           {coffee.description}
         </p>
         <p className="font-semibold mt-2 text-2xl text-brown-500">
