@@ -2,6 +2,7 @@ import { RiInstagramFill } from "react-icons/ri";
 import { FaFacebook } from "react-icons/fa";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { IoIosPin } from "react-icons/io";
+import { Link } from "react-router";
 
 export function Hero() {
   return (
@@ -32,12 +33,13 @@ export function Hero() {
           <p className="text-md md:text-xl font-light">
             A cozy spot made for long conversations and quiet mornings alike.
           </p>
-          <button
+          <Link
             className="hover:cursor-pointer bg-brown-300 py-3 px-6 rounded-2xl
               hover:brightness-115 mt-7"
+            to="/menu"
           >
             Buy Now!
-          </button>
+          </Link>
         </div>
         <div
           className="order:2 md:order-1 items-center justify-center flex z-10"
